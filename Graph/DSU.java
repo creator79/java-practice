@@ -56,3 +56,4 @@ public class DSU{
         System.out.println(obj.isConnected(8, 3));
     }
 }
+
