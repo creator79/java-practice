@@ -1,36 +1,30 @@
+
 // Java program to find number of islands using Disjoint
 // Set data structure.
 import java.io.*;
 import java.util.*;
 
-public class Number_Island2{
+public class Number_Island2 {
 
-	public static void main(String[] args)
-	{
-		int[][] a = new int[][] {{1, 1, 0, 0, 0},
-								{0, 1, 0, 0, 1},
-								{1, 0, 0, 1, 1},
-								{0, 0, 0, 0, 0},
-								{1, 0, 1, 0, 1}
-								};
-		System.out.println("Number of Islands is: " +
-						countIslands(a));
+	public static void main(String[] args) {
+		int[][] a = new int[][] { { 1, 1, 0, 0, 0 }, { 0, 1, 0, 0, 1 }, { 1, 0, 0, 1, 1 }, { 0, 0, 0, 0, 0 },
+				{ 1, 0, 1, 0, 1 } };
+		System.out.println("Number of Islands is: " + countIslands(a));
 	}
 
 	// Returns number of islands in a[][]
-	static int countIslands(int a[][])
-	{
+	static int countIslands(int a[][]) {
 		int n = a.length;
 		int m = a[0].length;
 
-		DisjointUnionSets dus = new DisjointUnionSets(n*m);
+		DisjointUnionSets dus = new DisjointUnionSets(n * m);
 
-		/* The following loop checks for its neighbours
-		and unites the indexes if both are 1. */
-		for (int j=0; j<n; j++)
-		{
-			for (int k=0; k<m; k++)
-			{
+		/*
+		 * The following loop checks for its neighbours and unites the indexes if both
+		 * are 1.
+		 */
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < m; k++) {
 				// If cell is 0, nothing to do
 				if (a[j][k] == 0)
 					continue;
@@ -38,41 +32,37 @@ public class Number_Island2{
 				// Check all 8 neighbours and do a union
 				// with neighbour's set if neighbour is
 				// also 1
-				if (j+1 < n && a[j+1][k]==1)
-					dus.union(j*(m)+k, (j+1)*(m)+k);
-				if (j-1 >= 0 && a[j-1][k]==1)
-					dus.union(j*(m)+k, (j-1)*(m)+k);
-				if (k+1 < m && a[j][k+1]==1)
-					dus.union(j*(m)+k, (j)*(m)+k+1);
-				if (k-1 >= 0 && a[j][k-1]==1)
-					dus.union(j*(m)+k, (j)*(m)+k-1);
-				if (j+1<n && k+1<m && a[j+1][k+1]==1)
-					dus.union(j*(m)+k, (j+1)*(m)+k+1);
-				if (j+1<n && k-1>=0 && a[j+1][k-1]==1)
-					dus.union(j*m+k, (j+1)*(m)+k-1);
-				if (j-1>=0 && k+1<m && a[j-1][k+1]==1)
-					dus.union(j*m+k, (j-1)*m+k+1);
-				if (j-1>=0 && k-1>=0 && a[j-1][k-1]==1)
-					dus.union(j*m+k, (j-1)*m+k-1);
+				if (j + 1 < n && a[j + 1][k] == 1)
+					dus.union(j * (m) + k, (j + 1) * (m) + k);
+				if (j - 1 >= 0 && a[j - 1][k] == 1)
+					dus.union(j * (m) + k, (j - 1) * (m) + k);
+				if (k + 1 < m && a[j][k + 1] == 1)
+					dus.union(j * (m) + k, (j) * (m) + k + 1);
+				if (k - 1 >= 0 && a[j][k - 1] == 1)
+					dus.union(j * (m) + k, (j) * (m) + k - 1);
+				if (j + 1 < n && k + 1 < m && a[j + 1][k + 1] == 1)
+					dus.union(j * (m) + k, (j + 1) * (m) + k + 1);
+				if (j + 1 < n && k - 1 >= 0 && a[j + 1][k - 1] == 1)
+					dus.union(j * m + k, (j + 1) * (m) + k - 1);
+				if (j - 1 >= 0 && k + 1 < m && a[j - 1][k + 1] == 1)
+					dus.union(j * m + k, (j - 1) * m + k + 1);
+				if (j - 1 >= 0 && k - 1 >= 0 && a[j - 1][k - 1] == 1)
+					dus.union(j * m + k, (j - 1) * m + k - 1);
 			}
 		}
 
 		// Array to note down frequency of each set
-		int[] c = new int[n*m];
+		int[] c = new int[n * m];
 		int numberOfIslands = 0;
-		for (int j=0; j<n; j++)
-		{
-			for (int k=0; k<m; k++)
-			{
-				if (a[j][k]==1)
-				{
+		for (int j = 0; j < n; j++) {
+			for (int k = 0; k < m; k++) {
+				if (a[j][k] == 1) {
 
-					int x = dus.find(j*m+k);
+					int x = dus.find(j * m + k);
 
 					// If frequency of set is 0,
 					// increment numberOfIslands
-					if (c[x]==0)
-					{
+					if (c[x] == 0) {
 						numberOfIslands++;
 						c[x]++;
 					}
@@ -87,40 +77,35 @@ public class Number_Island2{
 }
 
 // Class to represent Disjoint Set Data structure
-class DisjointUnionSets
-{
+class DisjointUnionSets {
 	int[] rank, parent;
 	int n;
 
-	public DisjointUnionSets(int n)
-	{
+	public DisjointUnionSets(int n) {
 		rank = new int[n];
 		parent = new int[n];
 		this.n = n;
 		makeSet();
 	}
 
-	void makeSet()
-	{
+	void makeSet() {
 		// Initially, all elements are in their
 		// own set.
-		for (int i=0; i<n; i++)
+		for (int i = 0; i < n; i++)
 			parent[i] = i;
 	}
 
 	// Finds the representative of the set that x
 	// is an element of
-	int find(int x)
-	{
-		if (parent[x] != x)
-		{
+	int find(int x) {
+		if (parent[x] != x) {
 			// if x is not the parent of itself,
 			// then x is not the representative of
 			// its set.
 			// so we recursively call Find on its parent
 			// and move i's node directly under the
 			// representative of this set
-			parent[x]=find(parent[x]);
+			parent[x] = find(parent[x]);
 		}
 
 		return parent[x];
@@ -128,8 +113,7 @@ class DisjointUnionSets
 
 	// Unites the set that includes x and the set
 	// that includes y
-	void union(int x, int y)
-	{
+	void union(int x, int y) {
 		// Find the representatives (or the root nodes)
 		// for x an y
 		int xRoot = find(x);
@@ -149,7 +133,7 @@ class DisjointUnionSets
 		// Else if y's rank is less than x's rank
 		// Then move y under x so that depth of tree
 		// remains less
-		else if(rank[yRoot]<rank[xRoot])
+		else if (rank[yRoot] < rank[xRoot])
 			parent[yRoot] = xRoot;
 
 		else // Else if their ranks are the same
